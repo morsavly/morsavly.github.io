@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>morsavly</title>
+
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="icon" type="image/png" href="./assets/favicon.png">
+  <link rel="icon" href="./assets/favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/validation.css">
+</head>
+
+<body>
+  <div class="app">
+
+    <header>
+      <div class="logo">
+        <img src="./assets/favicon.svg" alt="morsavly logo" class="logo-icon" width="28" height="28">
+        <span class="logo-text" data-i18n="app.title">morsavly <span>· Mortgage &amp; Savings</span></span>
+      </div>
+
+      <div class="header-controls">
+        <a href="https://github.com/gubbriaco" target="_blank" rel="noopener noreferrer" class="github-link"
+          aria-label="GitHub profile" title="GitHub">
+          <img src="./assets/github.svg" alt="GitHub" class="github-icon" width="18" height="18">
+        </a>
+
+        <div class="lang-switcher">
+          <button class="lang-btn active" data-lang-btn="it" onclick="applyLang('it')">IT</button>
+          <span class="lang-divider">|</span>
+          <button class="lang-btn" data-lang-btn="en" onclick="applyLang('en')">EN</button>
+        </div>
+
+        <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+          <img src="./assets/theme.svg" alt="" width="18" height="18">
+        </button>
+      </div>
+    </header>
+
+    <div class="tabs-wrapper">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="mortgage">
+          <img src="./assets/mortgage.svg" alt="" class="tab-icon" width="20" height="20">
+          <span data-i18n="tab.mortgage">Mortgage Calculator</span>
+        </button>
+
+        <button class="tab-btn" data-tab="savings">
+          <img src="./assets/savings.svg" alt="" class="tab-icon" width="20" height="20">
+          <span data-i18n="tab.savings">Savings Plan</span>
+        </button>
+      </div>
+    </div>
+
+    <main>
+      <div class="container">
+
+        <!-- ── MORTGAGE PANEL ── -->
+        <div id="panel-mortgage" class="panel active">
+          <div class="card">
+            <div class="card-title">
+              <img src="./assets/mortgage.svg" alt="" class="tab-icon" width="20" height="20">
+              <span data-i18n="mortgage.title">Mortgage Parameters</span>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="m-amount" data-i18n="mortgage.amount">Loan amount</label>
+                <div class="input-stepper">
+                  <input id="m-amount" type="number" value="80000" min="1000" step="1000">
+                  <span class="stepper-suffix">€</span>
+                  <div class="stepper-controls">
+                    <button type="button" class="step-btn step-up" data-target="m-amount"
+                      aria-label="Increase loan amount">+</button>
+                    <button type="button" class="step-btn step-down" data-target="m-amount"
+                      aria-label="Decrease loan amount">−</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label for="m-rate" data-i18n="mortgage.rate">Annual rate (APR)</label>
+                <div class="input-stepper">
+                  <input id="m-rate" type="number" value="3.1" min="0.1" max="20" step="0.1">
+                  <span class="stepper-suffix">%</span>
+                  <div class="stepper-controls">
+                    <button type="button" class="step-btn step-up" data-target="m-rate"
+                      aria-label="Increase annual rate">+</button>
+                    <button type="button" class="step-btn step-down" data-target="m-rate"
+                      aria-label="Decrease annual rate">−</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label for="m-term">Term</label>
+                <div class="input-stepper">
+                  <input id="m-term" type="number" value="20" min="1" max="30" step="1">
+                  <span class="stepper-suffix">yrs</span>
+                  <div class="stepper-controls">
+                    <button type="button" class="step-btn step-up" data-target="m-term"
+                      aria-label="Increase term">+</button>
+                    <button type="button" class="step-btn step-down" data-target="m-term"
+                      aria-label="Decrease term">−</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-orange" id="btn-reset-mortgage">
+                <img src="./assets/reset.svg" alt="" class="btn-icon" width="16" height="16">
+                <span data-i18n="action.reset">Reset</span>
+              </button>
+              <button class="btn btn-primary" id="btn-calc-mortgage">
+                <img src="./assets/calculate.svg" alt="" class="btn-icon" width="16" height="16">
+                <span data-i18n="mortgage.calculate">Calculate</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="mortgage-results" class="results-hidden">
+            <div class="kpi-grid" id="mortgage-kpis"></div>
+
+            <div class="card">
+              <div class="section-heading" data-i18n="mortgage.section.comparison">Term comparison</div>
+              <div class="table-wrap">
+                <table id="comparison-table">
+                  <thead>
+                    <tr>
+                      <th data-i18n="mortgage.table.term">Term</th>
+                      <th data-i18n="mortgage.table.monthly">Monthly payment</th>
+                      <th data-i18n="mortgage.table.interest">Total interest</th>
+                      <th data-i18n="mortgage.table.total">Total paid</th>
+                      <th data-i18n="mortgage.table.saving">Saving vs 30 yrs</th>
+                    </tr>
+                  </thead>
+                  <tbody id="comparison-body"></tbody>
+                </table>
+              </div>
+              <div class="info-banner">
+                <img src="./assets/info.svg" alt="" class="info-banner-icon" width="16" height="16">
+                <span id="mortgage-tip"></span>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="section-heading" data-i18n="mortgage.chart1.title">Remaining debt over time</div>
+              <div class="chart-container">
+                <canvas id="mortgage-line-chart" height="140"></canvas>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="section-heading" data-i18n="mortgage.chart2.title">Annual payment breakdown by term</div>
+              <div class="chart-container">
+                <canvas id="mortgage-bar-chart" height="140"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SAVINGS PANEL ── -->
+        <div id="panel-savings" class="panel">
+          <div class="card">
+            <div class="card-title">
+              <img src="./assets/savings.svg" alt="" class="tab-icon" width="20" height="20">
+              <span data-i18n="savings.title">Savings Plan Parameters</span>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="s-monthly" data-i18n="savings.monthly">Monthly contribution</label>
+                <div class="input-stepper">
+                  <input id="s-monthly" type="number" value="200" min="5" step="50">
+                  <span class="stepper-suffix">€</span>
+                  <div class="stepper-controls">
+                    <button type="button" class="step-btn step-up" data-target="s-monthly"
+                      aria-label="Increase monthly contribution">+</button>
+                    <button type="button" class="step-btn step-down" data-target="s-monthly"
+                      aria-label="Decrease monthly contribution">−</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label for="s-initial" data-i18n="savings.initial">Initial capital</label>
+                <div class="input-stepper">
+                  <input id="s-initial" type="number" value="100" min="1" step="50">
+                  <span class="stepper-suffix">€</span>
+                  <div class="stepper-controls">
+                    <button type="button" class="step-btn step-up" data-target="s-initial"
+                      aria-label="Increase initial capital">+</button>
+                    <button type="button" class="step-btn step-down" data-target="s-initial"
+                      aria-label="Decrease initial capital">−</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label for="s-return" data-i18n="savings.return">Expected annual return</label>
+                <div class="input-stepper">
+                  <input id="s-return" type="number" value="4" min="1" max="25" step="0.1">
+                  <span class="stepper-suffix">%</span>
+                  <div class="stepper-controls">
+                    <button type="button" class="step-btn step-up" data-target="s-return"
+                      aria-label="Increase annual return">+</button>
+                    <button type="button" class="step-btn step-down" data-target="s-return"
+                      aria-label="Decrease annual return">−</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label for="s-term" data-i18n="savings.term">Investment horizon</label>
+                <div class="input-stepper">
+                  <input id="s-term" type="number" value="20" min="1" max="30" step="1">
+                  <span class="stepper-suffix" data-i18n="suffix.yrs">yrs</span>
+                  <div class="stepper-controls">
+                    <button type="button" class="step-btn step-up" data-target="s-term"
+                      aria-label="Increase investment horizon">+</button>
+                    <button type="button" class="step-btn step-down" data-target="s-term"
+                      aria-label="Decrease investment horizon">−</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label for="s-inflation" data-i18n="savings.inflation">Annual inflation (opt.)</label>
+                <div class="input-stepper">
+                  <input id="s-inflation" type="number" value="2" min="0" max="20" step="0.1">
+                  <span class="stepper-suffix">%</span>
+                  <div class="stepper-controls">
+                    <button type="button" class="step-btn step-up" data-target="s-inflation"
+                      aria-label="Increase inflation">+</button>
+                    <button type="button" class="step-btn step-down" data-target="s-inflation"
+                      aria-label="Decrease inflation">−</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-orange" id="btn-reset-savings">
+                <img src="./assets/reset.svg" alt="" class="btn-icon" width="16" height="16">
+                <span data-i18n="action.reset">Reset</span>
+              </button>
+              <button class="btn btn-primary" id="btn-calc-savings">
+                <img src="./assets/calculate.svg" alt="" class="btn-icon" width="16" height="16">
+                <span data-i18n="savings.calculate">Calculate</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="savings-results" class="results-hidden">
+            <div class="kpi-grid" id="savings-kpis"></div>
+
+            <div class="piano-results-grid">
+              <div class="card" style="padding:0;overflow:hidden;">
+                <div style="padding:var(--space-5) var(--space-5) var(--space-4);">
+                  <div class="section-heading" style="margin-bottom:0;" data-i18n="savings.section.summary">Yearly
+                    summary</div>
+                </div>
+                <div class="month-table-wrap">
+                  <table id="savings-table">
+                    <thead>
+                      <tr>
+                        <th data-i18n="savings.table.year">Year</th>
+                        <th data-i18n="savings.table.contributed">Total contributed</th>
+                        <th data-i18n="savings.table.interest">Interest earned</th>
+                        <th data-i18n="savings.table.capital">Capital</th>
+                      </tr>
+                    </thead>
+                    <tbody id="savings-body"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="section-heading" data-i18n="savings.chart.title">Capital growth</div>
+                <div class="chart-container">
+                  <canvas id="savings-chart" height="140"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/tabs.js"></script>
+  <script src="js/mortgage.js"></script>
+  <script src="js/savings.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
