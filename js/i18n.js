@@ -5,7 +5,7 @@ const TRANSLATIONS = {
     'tab.savings': 'Savings Plan',
     'mortgage.title': 'Mortgage Parameters',
     'mortgage.amount': 'Loan amount',
-    'mortgage.rate': 'Annual rate (APR)',
+    'mortgage.rate': 'Annual interest rate',
     'mortgage.term': 'Term',
     'mortgage.calculate': 'Calculate',
     "action.reset": "Reset",
@@ -23,7 +23,7 @@ const TRANSLATIONS = {
     'mortgage.chart1.title': 'Remaining debt over time',
     'mortgage.chart2.title': 'Annual payment breakdown by term',
     'mortgage.tip': (y, rate, int, avg) =>
-      `With a ${y}-year term at ${rate}% APR, you pay ${int} in total interest. ` +
+      `With a ${y}-year term at ${rate}%, you pay ${int} in total interest. ` +
       `Each year you shorten the term saves you ~${avg}/yr in interest.`,
     'savings.title': 'Savings Plan Parameters',
     'savings.monthly': 'Monthly contribution',
@@ -46,7 +46,7 @@ const TRANSLATIONS = {
     'chart.axis.eur': 'EUR',
     'suffix.yrs': 'yrs',
     'kpi.sub.years': (y) => `after ${y} years`,
-    'kpi.sub.apr': (y, r) => `${y} yrs · ${r}% APR`,
+    'kpi.sub.apr': (y, r) => `${y} yrs · ${r}%`,
     'kpi.sub.pct': (p) => `${p}% of capital`,
   },
 
@@ -56,7 +56,7 @@ const TRANSLATIONS = {
     'tab.savings': 'Piano di Accumulo',
     'mortgage.title': 'Parametri del Mutuo',
     'mortgage.amount': 'Importo del mutuo',
-    'mortgage.rate': 'Tasso annuo (TAN)',
+    'mortgage.rate': 'Tasso di interesse annuale',
     'mortgage.term': 'Durata',
     'mortgage.calculate': 'Calcola',
     "action.reset": "Azzera",
@@ -76,7 +76,7 @@ const TRANSLATIONS = {
     'mortgage.tip': (y, rate, int, avg) =>
       `Con ${y} anni e tasso ${rate}%, paghi ${int} di interessi. ` +
       `Ogni anno in meno di durata ti fa risparmiare mediamente ${avg}/anno.`,
-    'savings.title': 'Parametri Piano di Accumulo (PAC)',
+    'savings.title': 'Parametri del Piano di Accumulo',
     'savings.monthly': 'Versamento mensile',
     'savings.initial': 'Capitale iniziale',
     'savings.return': 'Rendimento annuo atteso',
@@ -97,7 +97,7 @@ const TRANSLATIONS = {
     'chart.axis.eur': 'EUR',
     'suffix.yrs': 'anni',
     'kpi.sub.years': (y) => `dopo ${y} anni`,
-    'kpi.sub.apr': (y, r) => `${y} anni · ${r}% TAN`,
+    'kpi.sub.apr': (y, r) => `${y} anni · ${r}%`,
     'kpi.sub.pct': (p) => `${p}% del capitale`,
   },
 };
